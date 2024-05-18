@@ -5,13 +5,23 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TabsExample from './components/nav';
 import Contact from './components/contact';
+import Formulario from './components/formulario';
 
 function App() {
+
+
+
+
+
+ 
 
   return (
     <>
     <TabsExample />
     <Contact />
+    <Formulario />
+
+    
     </>
   );
 }
