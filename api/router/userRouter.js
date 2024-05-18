@@ -36,6 +36,21 @@ function userRouter(app) {
 
         }
     });
+
+    router.delete('/users/:id', async (req, res) => {
+        try {
+            const id = req.params.id;
+            const results = await userServ.deleteUser(id);
+            res.json({
+                msg: "User deleted successfully",
+                data: results
+            });
+
+        } catch (error) {
+            console.error(error);
+
+        }
+    });
 }
 
 module.exports = userRouter;

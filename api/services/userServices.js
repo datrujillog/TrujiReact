@@ -17,6 +17,12 @@ class UserSevices {
             data:data
         });
     }
+
+    async deleteUser(id) {
+        return await this.prisma.delete({
+            where: { id: id }
+        });
+    }
 }
 
 module.exports = UserSevices;
