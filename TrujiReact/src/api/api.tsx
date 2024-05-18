@@ -1,10 +1,14 @@
-// import axios from 'axios';
-
-// const api = axios.create({
-//   baseURL: 'http://localhost:3000',
-// });
+import axios from 'axios';
 
 
-// axios.post('http://localhost:5000/api/users', {
-//     data
-// })
+export const sendContact = async (data: object) => {
+    try {
+        const response = await axios.post('http://localhost:5000/api/users', {
+            data: data
+        });
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+};
+

@@ -4,8 +4,9 @@
 // import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TabsExample from './components/nav';
-import Contact from './components/contact';
-import Formulario from './components/formulario';
+// import Contact from './components/contact';
+// import Formulario from './components/formulario';
+import ListUser from './components/listUser';
 
 function App() {
 
@@ -18,8 +19,8 @@ function App() {
   return (
     <>
     <TabsExample />
-    <Contact />
-    <Formulario/>
+    {/* <Contact /> */}
+    <ListUser />
 
     
     </>
