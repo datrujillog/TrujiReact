@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
 
 function Contact() {
     const [formData, setFormData] = useState({
@@ -14,12 +15,18 @@ function Contact() {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Datos del formulario:', e.preventDefault);
-        console.log("DATA",formData);
+
+        axios.post('http://localhost:5000/api/users', {
         // Aquí puedes enviar los datos del formulario a través de una solicitud HTTP
+            data: formData
+        }).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        });
     };
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => { // Cambié el tipo de evento de 'any' a 'ChangeEvent<HTMLInputElement>' para que sea más específico
         setFormData({
             ...formData,
             [e.target.name]: e.target.value

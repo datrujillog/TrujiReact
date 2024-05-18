@@ -14,7 +14,7 @@ class UserSevices {
 
     async postUser(data) {
         return await this.prisma.create({
-            data
+            data:data.data
         });
     }
 }

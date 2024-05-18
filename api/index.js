@@ -1,5 +1,6 @@
 const express = require('express');
 const dev = require('morgan');
+const cors = require('cors');
 
 const User = require('./router/userRouter');
 
@@ -14,6 +15,7 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(dev('dev'));
+app.use(cors());
 
 router.get('/', (req, res) => {
     res.send('Hello World');
