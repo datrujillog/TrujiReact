@@ -19,7 +19,7 @@ function App() {
     <>
     <TabsExample />
     <Contact />
-    <Formulario />
+    <Formulario/>
 
     
     </>

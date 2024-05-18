@@ -24,6 +24,8 @@ const Formulario: React.FC = () => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        console.log('Datos del formulario:', e.preventDefault);
+
         // Enviar la petición POST
         fetch('https://ejemplo.com/api/endpoint', {
             method: 'POST',
@@ -48,7 +50,7 @@ const Formulario: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className='mt-5' onSubmit={handleSubmit}>
             <label>
                 Nombre:
                 <input
