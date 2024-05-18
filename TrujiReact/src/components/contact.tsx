@@ -5,12 +5,17 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 function Contact() {
+
+
+
+
+    
     return (
         <>
             <Container className='mt-4'>
                 <Row>
-                    {/* <Col
-                       lg={6}
+                    <Col
+                       lg={6} xs={12}
                         className='mx-auto'>
                         <InputGroup className="mb-3">
                             <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
@@ -48,22 +53,22 @@ function Contact() {
                             <InputGroup.Text>With textarea</InputGroup.Text>
                             <Form.Control as="textarea" aria-label="With textarea" />
                         </InputGroup>
+                    </Col>
+
+
+
+
+                    <Col lg={6} xs={12}>
+                        <h1 className='text-justify text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero tempore dignissimos eos aspernatur excepturi. Unde, itaque harum soluta sint corrupti nisi et, accusantium minus non impedit eos praesentium consectetur nesciunt.</h1>
+                    </Col>
+
+                    {/* <Col lg={4} xs={6}>
+                        <h1 className='text-justify text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero tempore dignissimos eos aspernatur excepturi. Unde, itaque harum soluta sint corrupti nisi et, accusantium minus non impedit eos praesentium consectetur nesciunt.</h1>
                     </Col> */}
 
-
-
-
-                    <Col lg={4}>
+                    {/* <Col lg={4} xs={12}>
                         <h1 className='text-justify text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero tempore dignissimos eos aspernatur excepturi. Unde, itaque harum soluta sint corrupti nisi et, accusantium minus non impedit eos praesentium consectetur nesciunt.</h1>
-                    </Col>
-
-                    <Col lg={4}>
-                        <h1 className='text-justify text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero tempore dignissimos eos aspernatur excepturi. Unde, itaque harum soluta sint corrupti nisi et, accusantium minus non impedit eos praesentium consectetur nesciunt.</h1>
-                    </Col>
-
-                    <Col lg={4}>
-                        <h1 className='text-justify text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero tempore dignissimos eos aspernatur excepturi. Unde, itaque harum soluta sint corrupti nisi et, accusantium minus non impedit eos praesentium consectetur nesciunt.</h1>
-                    </Col>
+                    </Col> */}
                 </Row>
             </Container>
         </>
