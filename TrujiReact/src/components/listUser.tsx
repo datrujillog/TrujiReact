@@ -1,4 +1,5 @@
 import Table from 'react-bootstrap/Table';
+import Modal from 'react-bootstrap/Modal';
 import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -6,6 +7,8 @@ import Col from 'react-bootstrap/Col'
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { Button, Form } from 'react-bootstrap';
+import { sendContact } from '../api/api';
 
 interface User {
     id: string;
@@ -20,6 +23,11 @@ function ListUser() {
 
     const [users, setUsers] = useState<User[]>([]);
     const [selectedRow, setSelectedRow] = useState<number | null>(null);
+    const [showModal, setShowModal] = useState(false);
+    const [editUser, setEditUser] = useState<User | null>(null);
+
+    const [newUser, setNewUser] = useState<User | null>(null);
+    const [showCreateModal, setShowCreateModal] = useState(false);
 
 
     const getUsers = async () => {
@@ -37,17 +45,13 @@ function ListUser() {
         getUsers();
     }, []);
 
-
-    console.log(users);
-
     const handleRowClick = (index: number) => {
         setSelectedRow(index);
         console.log(users[index]);
     };
 
     const handleDelete = async (user: User) => {
-        // Aquí puedes enviar la petición para eliminar el usuario
-        // Por ejemplo:
+
         const MySwal = withReactContent(Swal)
         MySwal.fire({
             title: "Desear eliminar el usuario?",
@@ -60,10 +64,8 @@ function ListUser() {
             if (result.isConfirmed) {
                 Swal.fire("Eliminado", "", "success");
                 axios.delete(`http://localhost:5000/api/users/${user.id}`);
-                //actulizar la  tabla cuando se elimine un usuario 
-                getUsers();  //llamamos a la funcion para que se actualice la tabla
+                getUsers();
 
-                
             } else if (result.isDenied) {
                 Swal.fire("No se pudo eliminar", "", "info");
             }
@@ -76,13 +78,61 @@ function ListUser() {
         // console.log("DELETE",us.id);
         // alert("Usuario eliminado");
     };
-
+    // Update
     const handleEdit = (user: User) => {
-        // Aquí puedes enviar la petición para editar el usuario
-        // Por ejemplo:
-        // await axios.put(`http://localhost:5000/api/users/${user.username}`, { ...user, email: 'newEmail@example.com' });
-        console.log("EDIt", user);
+        setEditUser(user);
+        setShowModal(true);
     };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
+    const handleSaveChanges = async () => {
+        if (editUser) {
+            // Aquí puedes enviar la petición para editar el usuario
+            // Por ejemplo:
+            await axios.put(`http://localhost:5000/api/users/${editUser.id}`, editUser);
+            getUsers(); // Actualiza la lista de usuarios después de la edición
+        }
+        setShowModal(false);
+    };
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (editUser) {
+            setEditUser({
+                ...editUser,
+                [event.target.name]: event.target.value,
+            });
+        }
+    };
+
+    // Create
+
+   const hadleCreate = () => {
+    setNewUser({id: '', username: '', email: '' });
+        setShowCreateModal(true);
+    };
+
+    const handleCreateInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (newUser) {
+            setNewUser({
+                ...newUser,
+                [event.target.name]: event.target.value,
+            });
+        }
+    };
+
+    const handleCreateUser = async () => {
+        if (newUser) {
+            // await axios.post(`http://localhost:5000/api/users`, newUser);
+            sendContact(newUser);
+            console.log('newUser', newUser);
+            getUsers(); 
+        }
+        setShowCreateModal(false);
+    };
+
 
     return (
         <>
@@ -99,31 +149,94 @@ function ListUser() {
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            {users.map((user: User, index: number) => (
-                                <tr
-                                    key={index}
-                                    onClick={() => handleRowClick(index)}
-                                    style={{
-                                        backgroundColor: selectedRow === index ? '#f1f1f1' : 'transparent',
-                                        cursor: 'pointer',
-                                        boxShadow: selectedRow === index ? '0 0 10px #000' : 'none',
-                                    }}
-
-                                >
-                                    <td>{index + 1}</td>
-                                    <td>{user.username}</td>
-                                    <td>{user.email}</td>
-                                    <td>
-                                        <button className='btn btn-danger' onClick={() => handleDelete(user)}>Delete</button>
-                                        <button className='btn btn-warning' onClick={() => handleEdit(user)}>Edit</button>
-                                    </td>
-                                </tr>
-                            ))}
+                            <tbody>
+                                {users.map((user: User, index: number) => (
+                                    <tr
+                                        key={index}
+                                        onClick={() => handleRowClick(index)}
+                                        style={{
+                                            backgroundColor: selectedRow === index ? '#f1f1f1' : 'transparent',
+                                            cursor: 'pointer',
+                                            boxShadow: selectedRow === index ? '0 0 10px #000' : 'none',
+                                        }}
+                                    >
+                                        <td>{index + 1}</td>
+                                        <td>{user.username}</td>
+                                        <td>{user.email}</td>
+                                        <td>
+                                            <button className='btn btn-danger' style={{ marginRight: '10px' }} onClick={() => handleDelete(user)}>Delete</button>
+                                            <button className='btn btn-warning ' style={{ marginRight: '10px' }} onClick={() => handleEdit(user)}>Edit</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
 
                         </Table>
                     </Col>
+                <button className='btn btn-success ' style={{ marginRight: '10px' }} onClick={() => hadleCreate()}>Create</button>
                 </Row>
+
+
             </Container>
+
+
+            {/* // Modal para editar usuario */}
+
+            <Modal show={showModal} onHide={handleCloseModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit User</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="formUsername">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control type="text" placeholder="Enter username" name="username" value={editUser?.username} onChange={handleInputChange} />
+                        </Form.Group>
+
+                        <Form.Group controlId="formEmail">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control type="email" placeholder="Enter email" name="email" value={editUser?.email} onChange={handleInputChange} />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleSaveChanges}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Modal para crear usuario */}
+
+            <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Create User</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="formUsername">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control type="text" placeholder="Enter username" name="username" onChange={handleCreateInputChange} />
+                        </Form.Group>
+
+                        <Form.Group controlId="formEmail">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control type="email" placeholder="Enter email" name="email" onChange={handleCreateInputChange} />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowCreateModal(false)}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleCreateUser}>
+                        Create User
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
         </>
 

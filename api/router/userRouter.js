@@ -37,6 +37,22 @@ function userRouter(app) {
         }
     });
 
+    router.put('/users/:id', async (req, res) => {
+        try {
+            const id = req.params.id;
+            const data = req.body;
+            const results = await userServ.updateUser(id, data);
+            res.json({
+                msg: "User updated successfully",
+                data: results
+            });
+
+        } catch (error) {
+            console.error(error);
+
+        }
+    });
+
     router.delete('/users/:id', async (req, res) => {
         try {
             const id = req.params.id;

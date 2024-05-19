@@ -13,8 +13,16 @@ class UserSevices {
     }
 
     async postUser(data) {
+        delete data.id;
         return await this.prisma.createMany({
             data:data
+        });
+    }
+
+    async updateUser(id, data) {
+        return await this.prisma.update({
+            where: { id: id },
+            data: data
         });
     }
 
