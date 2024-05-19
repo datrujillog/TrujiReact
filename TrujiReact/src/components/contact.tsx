@@ -30,7 +30,9 @@ function Contact() {
     };
 
     return (
+
         <Container className='mt-4'>
+            <h1>Contact</h1>
             <Row>
                 <Col lg={6} xs={12} className='mx-auto'>
                     <Form onSubmit={handleSubmit}>
