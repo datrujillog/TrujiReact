@@ -174,6 +174,7 @@ function ListUser() {
                         </Table>
                     </Col>
                 <button className='btn btn-success ' style={{ marginRight: '10px' }} onClick={() => hadleCreate()}>Create</button>
+                <button className='btn btn-primary my-4 ' style={{ marginRight: '10px' }} onClick={getUsers}>Reload</button>
                 </Row>
 
 
