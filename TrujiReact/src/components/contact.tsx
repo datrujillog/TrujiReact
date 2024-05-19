@@ -6,6 +6,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Button } from 'react-bootstrap';
 import { sendContact } from '../api/api';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 

@@ -2,7 +2,7 @@
 // import './App.css';
 
 // import { Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import TabsExample from './components/nav';
 // import Contact from './components/contact';
 // import Formulario from './components/formulario';
@@ -20,7 +20,7 @@ function App() {
     <>
     <TabsExample />
     {/* <Contact /> */}
-    <ListUser />
+    {/* <ListUser /> */}
 
     
     </>

@@ -4,11 +4,13 @@ import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { Button, Form } from 'react-bootstrap';
 import { sendContact } from '../api/api';
+
 
 interface User {
     id: string;
